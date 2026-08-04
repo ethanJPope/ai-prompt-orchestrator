@@ -1,0 +1,48 @@
+{
+  "experimentId": "ab-001",
+  "date": "2026-08-03",
+  "originalPrompt": "original-prompt.md",
+  "rubric": {
+    "path": "rubric.md",
+    "sha256": "CD88D233C3FF10F6206E62A06D51DDBFDFFBB36B10BD05F34C5F9BC54B901E42"
+  },
+  "grader": {
+    "path": "grading/grade.mjs",
+    "sha256": "439F8C9AF4584D65F4B0918DD496342575B4ED03F70B416F92F562F38E79E451",
+    "oracleScore": 100,
+    "untouchedStarterScore": 15
+  },
+  "treatment": {
+    "threadId": "019fca60-3145-7c82-81f1-4ae23e625d1f",
+    "workspace": "plugin-run",
+    "plugin": "ai-prompt-orchestrator@personal 0.1.0",
+    "pluginConfirmedInvoked": true,
+    "reviewContract": 20,
+    "specialistPasses": 19,
+    "finalArbiterPasses": 1,
+    "startedAtUtc": "2026-08-04T01:25:30Z",
+    "completedAtUtc": "2026-08-04T01:39:59Z",
+    "durationMs": 869018,
+    "score": 100,
+    "submittedTests": 11
+  },
+  "baseline": {
+    "threadId": "019fca6e-5615-70a1-bb04-382079bd9dae",
+    "workspace": "baseline-run",
+    "pluginAbsentConfirmedBeforeCreation": true,
+    "startedAtUtc": "2026-08-04T01:40:57Z",
+    "completedAtUtc": "2026-08-04T01:44:44Z",
+    "durationMs": 227484,
+    "score": 100,
+    "submittedTests": 9
+  },
+  "comparison": {
+    "qualityResult": "tie",
+    "productionImplementationByteIdentical": true,
+    "onlyDifferingFile": "test/complete-task.test.mjs",
+    "treatmentToBaselineDurationRatio": 3.82,
+    "additionalTreatmentDurationMs": 641534,
+    "correctionTurnsEach": 0,
+    "runtimeLimitation": "Both task runs and the primary grader used Node.js 24.11.0, not the fixture-requested Node.js 22. A second grader pass used the bundled Node.js 24.14.0."
+  }
+}

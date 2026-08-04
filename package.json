@@ -1,0 +1,19 @@
+{
+  "name": "ai-prompt-orchestrator",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Local proof of a revocable, targeted minimum-ten Codex review orchestrator.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "setup:plugin": "node scripts/configure-local-plugin.mjs",
+    "test": "node --test",
+    "smoke": "node scripts/smoke.mjs",
+    "entitlement": "node scripts/set-entitlement.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "zod": "4.4.3"
+  }
+}

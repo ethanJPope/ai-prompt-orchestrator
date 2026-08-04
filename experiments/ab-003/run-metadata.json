@@ -1,0 +1,84 @@
+{
+  "experimentId": "ab-003",
+  "date": "2026-08-03",
+  "originalPrompt": "original-prompt.md",
+  "promptAttachments": {
+    "treatmentSha256": "B4DB26E3C176974B0EE3D9807EBB74A29EF29EFB074D7480115CD6DB7F1DD9E5",
+    "baselineSha256": "B4DB26E3C176974B0EE3D9807EBB74A29EF29EFB074D7480115CD6DB7F1DD9E5",
+    "byteIdentical": true
+  },
+  "treatment": {
+    "threadId": "019fcab1-8ad1-7b10-9861-81307209d74c",
+    "title": "Build Night Signal festival site - plugin is used",
+    "workspace": "plugin-run task workspace",
+    "pluginConfirmedInvoked": true,
+    "reviewContract": 10,
+    "reviewersObserved": 10,
+    "model": "gpt-5.6-luna",
+    "reasoningEffort": "xhigh",
+    "startedAtEpochSeconds": 1785812067,
+    "completedAtEpochSeconds": 1785815617,
+    "durationMs": 3549511,
+    "testsPassed": 9,
+    "testsTotal": 9,
+    "scores": {
+      "visual": 42.0,
+      "productBehavior": 25.0,
+      "responsiveAccessibility": 13.5,
+      "engineeringEvidence": 10.0,
+      "completionEvidence": 2.0,
+      "total": 92.5
+    }
+  },
+  "baseline": {
+    "threadId": "019fcab1-4af6-72c3-9bce-7e67a309fc3a",
+    "title": "Build Night Signal AB-003",
+    "workspace": "baseline-run task workspace",
+    "pluginConfirmedInvoked": false,
+    "model": "gpt-5.6-luna",
+    "reasoningEffort": "xhigh",
+    "startedAtEpochSeconds": 1785812045,
+    "completedAtEpochSeconds": 1785812793,
+    "durationMs": 748107,
+    "testsPassed": 8,
+    "testsTotal": 8,
+    "scores": {
+      "visual": 41.0,
+      "productBehavior": 22.0,
+      "responsiveAccessibility": 9.5,
+      "engineeringEvidence": 10.0,
+      "completionEvidence": 3.0,
+      "total": 85.5
+    }
+  },
+  "comparison": {
+    "qualityWinner": "treatment",
+    "qualityMargin": 7.0,
+    "visualWinner": "treatment",
+    "visualMargin": 1.0,
+    "treatmentToBaselineDurationRatio": 4.74,
+    "additionalTreatmentDurationMs": 2801404,
+    "correctionTurnsEach": 0,
+    "namedConflictWarning": {
+      "treatment": true,
+      "baseline": false
+    },
+    "desktopOverflow": {
+      "treatment": false,
+      "baseline": false
+    },
+    "mobileOverflow": {
+      "treatment": false,
+      "baseline": false
+    },
+    "blindAdjudication": false
+  },
+  "screenshots": {
+    "treatmentDesktop": "screenshots/plugin-desktop-final.png",
+    "treatmentMobile": "screenshots/plugin-mobile-final.png",
+    "baselineDesktop": "screenshots/baseline-desktop.png",
+    "baselineMobile": "screenshots/baseline-mobile.png",
+    "actualDesktopPixels": "1425x990",
+    "actualMobilePixels": "375x812"
+  }
+}

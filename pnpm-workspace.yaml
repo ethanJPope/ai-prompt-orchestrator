@@ -1,0 +1,8 @@
+packages:
+  - .
+
+minimumReleaseAgeExclude:
+  - hono@4.13.0
+
+overrides:
+  hono: 4.13.0

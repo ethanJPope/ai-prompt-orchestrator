@@ -1,0 +1,26 @@
+{
+  "name": "ai-prompt-orchestrator",
+  "version": "0.2.0+codex.20260804133803",
+  "description": "Prepare evidence-driven Codex tasks with a targeted, parallel minimum-ten review pipeline.",
+  "author": {
+    "name": "Ethan"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AI Prompt Orchestrator",
+    "shortDescription": "Run ten targeted reviews with visual QA for interface work.",
+    "longDescription": "Improves substantive coding requests, checks server-side entitlement, and returns a task-specific minimum-ten plan with parallel review waves and screenshot-grounded visual QA.",
+    "developerName": "Ethan",
+    "category": "Productivity",
+    "capabilities": [
+      "Review orchestration",
+      "Prompt refinement",
+      "Visual QA"
+    ],
+    "defaultPrompt": [
+      "Prepare this coding task with at least ten reviewers.",
+      "Improve my request and identify missing decisions."
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

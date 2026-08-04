@@ -1,0 +1,14 @@
+{
+  "accounts": {
+    "demo-active": {
+      "status": "active",
+      "plan": "development",
+      "note": "Local active-account proof only."
+    },
+    "demo-cancelled": {
+      "status": "inactive",
+      "plan": "development",
+      "note": "Local cancellation proof only."
+    }
+  }
+}

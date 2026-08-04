@@ -1,0 +1,63 @@
+{
+  "experimentId": "ab-002",
+  "date": "2026-08-03",
+  "originalPrompt": "original-prompt.md",
+  "rubric": {
+    "path": "rubric.md",
+    "sha256": "31E987202E0184D372A44E1F0B20318CF74FE5B6C741ACEF5ADAEAAE58BDDEA5"
+  },
+  "staticChecker": {
+    "path": "grading/static-check.mjs",
+    "sha256": "A8498FC5EA9DE3C0776FAF99F1FA29929566701ECBE6CD973F7071B2D8F46C9C",
+    "untouchedStarterScore": 0,
+    "knownFalsePositive": "The external-URL pattern treats the SVG namespace inside an embedded data URI as a network asset. Source inspection confirmed that the baseline makes no external request."
+  },
+  "treatment": {
+    "threadId": "019fca7d-9421-7c50-80f1-7cd2a379c664",
+    "workspace": "plugin-run",
+    "pluginConfirmedInvoked": true,
+    "reviewContract": 10,
+    "startedAtUtc": "2026-08-04T01:57:36Z",
+    "completedAtUtc": "2026-08-04T02:15:23Z",
+    "durationMs": 1067164,
+    "submittedTests": 7,
+    "staticRawScore": 30,
+    "browserScore": 20,
+    "visualScore": 43,
+    "rawTotalScore": 93
+  },
+  "baseline": {
+    "threadId": "019fca8e-8099-73e2-865e-c016d246b3ce",
+    "workspace": "baseline-run",
+    "pluginAbsentConfirmedBeforeCreation": true,
+    "startedAtUtc": "2026-08-04T02:16:05Z",
+    "completedAtUtc": "2026-08-04T02:21:28Z",
+    "durationMs": 323148,
+    "submittedTests": 5,
+    "staticRawScore": 25,
+    "staticAdjudicatedScore": 30,
+    "browserScore": 20,
+    "visualScore": 48,
+    "rawTotalScore": 93,
+    "adjudicatedTotalScore": 98
+  },
+  "comparison": {
+    "visualWinner": "baseline",
+    "visualMargin": 5,
+    "rawRubricResult": "tie",
+    "treatmentToBaselineDurationRatio": 3.3,
+    "additionalTreatmentDurationMs": 744016,
+    "correctionTurnsEach": 0,
+    "desktopOverflow": { "treatment": false, "baseline": false },
+    "mobileOverflow": { "treatment": false, "baseline": false },
+    "plannerInteractionPassed": { "treatment": true, "baseline": true }
+  },
+  "screenshots": {
+    "treatmentDesktop": "screenshots/plugin-hero-1440x1000.png",
+    "baselineDesktop": "screenshots/baseline-hero-1440x1000.png",
+    "treatmentMobile": "screenshots/plugin-mobile-390x844.png",
+    "baselineMobile": "screenshots/baseline-mobile-390x844.png",
+    "treatmentPlanner": "screenshots/plugin-planner-1440x1000.png",
+    "baselinePlanner": "screenshots/baseline-planner-1440x1000.png"
+  }
+}
