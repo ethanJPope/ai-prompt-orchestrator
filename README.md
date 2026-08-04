@@ -54,14 +54,14 @@ pnpm test
 pnpm smoke
 ```
 
-The repository-local marketplace is not installed automatically. When ready to test it in Codex, add this repository as a local marketplace and install the plugin:
+The repository already contains `.agents/plugins/marketplace.json`, so the Codex desktop app can discover it as a repo marketplace. After generating `.mcp.json`:
 
-```powershell
-codex plugin marketplace add <absolute-path-to-this-repository>
-codex plugin add ai-prompt-orchestrator@personal
-```
+1. Open this repository as the active project in the Codex desktop app.
+2. Restart the desktop app so it reloads the repo marketplace.
+3. Open **Plugins**, find **AI Prompt Orchestrator** under the local **Personal** marketplace, and install or enable it.
+4. Start a new Codex task so the skill and MCP tools load from a clean boundary.
 
-Start a new Codex task after installation so the skill and MCP tools load from a clean boundary.
+Do not assume the standalone `codex` executable supports plugin-management subcommands; older CLI builds do not. The desktop Plugins Directory is the authoritative installation route for this repo-local prototype.
 
 For a full new-device restart prompt, see `RESTART-ON-ANOTHER-DEVICE.md`.
 
