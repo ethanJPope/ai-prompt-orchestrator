@@ -1,6 +1,6 @@
 {
   "name": "ai-prompt-orchestrator",
-  "version": "0.2.0+codex.20260804133803",
+  "version": "0.3.0+codex.20260804235256",
   "description": "Prepare evidence-driven Codex tasks with a targeted, parallel minimum-ten review pipeline.",
   "author": {
     "name": "Ethan"
@@ -18,7 +18,7 @@
       "Visual QA"
     ],
     "defaultPrompt": [
-      "Prepare this coding task with at least ten reviewers.",
+      "Prepare this coding task with exactly ten reviewers.",
       "Improve my request and identify missing decisions."
     ]
   },

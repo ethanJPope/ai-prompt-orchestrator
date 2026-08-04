@@ -45,7 +45,7 @@ const transport = new StdioClientTransport({
   },
   stderr: "pipe",
 });
-const client = new Client({ name: "ai-prompt-orchestrator-smoke", version: "0.2.0" });
+const client = new Client({ name: "ai-prompt-orchestrator-smoke", version: "0.3.0" });
 
 try {
   await client.connect(transport);
@@ -61,7 +61,9 @@ try {
 
   assert.equal(activeResult.isError, undefined);
   assert.equal(activeResult.structuredContent.substantive, true);
-  assert.ok(activeResult.structuredContent.reviewerCount >= 10);
+  assert.equal(activeResult.structuredContent.schemaVersion, "0.3");
+  assert.match(activeResult.structuredContent.correlationId, /^[0-9a-f-]{36}$/i);
+  assert.equal(activeResult.structuredContent.reviewerCount, 10);
   assert.equal(
     activeResult.structuredContent.reviewers.at(-1).id,
     "final-senior-review",
@@ -78,7 +80,18 @@ try {
   });
   assert.equal(visualResult.structuredContent.taskClass, "visual-interface");
   assert.equal(visualResult.structuredContent.reviewerCount, 10);
+  assert.equal(visualResult.structuredContent.evidencePacket.location, "task-local");
+  assert.equal(visualResult.structuredContent.executionPolicy.latencyTargetMultiplier, 2);
+  assert.equal(
+    visualResult.structuredContent.telemetry.correlationId,
+    visualResult.structuredContent.correlationId,
+  );
   assert.equal(visualResult.structuredContent.executionPolicy.maxRepairPasses, 1);
+  assert.ok(
+    visualResult.structuredContent.deterministicGates.some(
+      (gate) => gate.id === "viewport-evidence",
+    ),
+  );
   assert.ok(
     visualResult.structuredContent.reviewers.some(
       (reviewer) => reviewer.id === "visual-art-direction",

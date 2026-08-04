@@ -1,13 +1,15 @@
+import { randomUUID } from "node:crypto";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
 import { getEntitlement } from "./entitlements.mjs";
 import { preparePlan } from "./orchestrator.mjs";
+import { reviewPlanSchema, reviewResponseSchema } from "./review-contract.mjs";
 
 const server = new McpServer({
   name: "ai-prompt-orchestrator",
-  version: "0.2.0",
+  version: "0.3.0",
 });
 
 function resultContent(result) {
@@ -44,7 +46,7 @@ server.registerTool(
   {
     title: "Prepare a targeted minimum-ten review plan",
     description:
-      "Improve a coding request and select at least ten targeted reviewer passes, with screenshot review for visual work and parallel execution waves.",
+      "Improve a coding request and select exactly ten targeted reviewer passes, with screenshot review for visual work and parallel execution waves.",
     inputSchema: {
       account_id: z.string().min(1).describe("Local development account identifier."),
       prompt: z.string().min(1).max(20000).describe("The user's current request."),
@@ -54,6 +56,7 @@ server.registerTool(
         .optional()
         .describe("A short project summary; do not send secrets, source files, or raw transcripts."),
     },
+    outputSchema: reviewResponseSchema.shape,
   },
   async ({ account_id, prompt, project_context }) => {
     const entitlement = await getEntitlement(account_id);
@@ -70,12 +73,14 @@ server.registerTool(
       };
     }
 
-    const plan = preparePlan(prompt, project_context ?? "");
-    const response = {
+    const plan = reviewPlanSchema.parse(
+      preparePlan(prompt, project_context ?? "", { correlationId: randomUUID() }),
+    );
+    const response = reviewResponseSchema.parse({
       accountId: account_id,
       entitlementStatus: entitlement.status,
       ...plan,
-    };
+    });
     return {
       content: resultContent(response),
       structuredContent: response,

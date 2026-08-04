@@ -14,11 +14,23 @@ Status: three controlled trials completed on 2026-08-03. Trial 001 tied at 100/1
 
 Version 0.2 was exercised in trial 003. Visual-interface work received exactly ten targeted passes, including two screenshot-grounded visual reviewers. The pipeline improved product completeness and responsive accessibility, but the 4.74× latency ratio was worse than version 0.1's previous trial. Ten full `xhigh` reviewer turns are not a viable speed design even when scheduled in bounded waves. The current v0.2 setup adds a portable new-device generator so the thin local plugin no longer commits one machine's absolute server path.
 
-## Stopping point for v0.2
+## Locked v0.3 constraints
+
+- Minimum-ten means ten actual read-only reviewer-agent turns; deterministic checks supplement them and do not count toward ten.
+- Normal substantive work must target no more than 2× the wall-clock time of normal Codex.
+- The first supported surface is the Codex desktop app; CLI and IDE support are deferred.
+- v0.3 remains local and free of real billing or payment activation.
+- Websites and UI work is the first optimized task class because it has the strongest measured evidence.
+
+## Current implementation stopping point
 
 - Thin local Codex plugin scaffolded.
 - Fresh clones can generate their machine-local MCP configuration with `pnpm setup:plugin`.
 - MCP server produces deterministic enhanced prompts and reviewer plans.
+- v0.3 review plans expose versioned evidence-packet, reviewer-budget, deterministic-gate, finalization, and telemetry contracts.
+- The visual classifier covers common UI language such as React settings pages, login forms, and onboarding screens.
+- Review waves run discovery first, then a gate phase, then bounded specialists, with the arbiter last.
+- `pnpm validate:evidence <packet.json> --plan=<returned-review-plan.json>` fails closed on plan mismatch, missing gates or generated UI measurements, stale screenshots, incomplete reviewers, duplicate or unknown outcomes, unsafe paths, and non-ready final status.
 - The original twenty server-side reviewer profiles remain available, with two added visual specialists.
 - Visual requests require consistent desktop and mobile renders before visual review.
 - Review plans expose bounded parallel waves, a one-repair cap, and clean-pass early exit.
@@ -36,14 +48,14 @@ Version 0.2 was exercised in trial 003. Visual-interface work received exactly t
 
 ## Next action
 
-Optimize reviewer latency without dropping the minimum-ten contract: build one shared evidence packet, use lower reasoning and strict time/tool budgets for most reviewers, limit browser work to visual specialists, and make contrast, target-size, requirement-coverage, and final-screenshot checks deterministic gates. Then run a fresh unseen trial.
+Create the task-local evidence packet during a fresh blinded AB-004 website trial, run the v0.3 workflow in both treatment and baseline tasks, and compare quality and wall-clock time against the 2× target.
 
 ## Restart packet
 
-- Stopping point: Version 0.2 completed AB-003 with all ten reviewers. It won 92.5 to 85.5 overall and 42 to 41 visually, but took 59m 09.5s versus 12m 28.1s (4.74×).
+- Stopping point: v0.3 contract and fail-closed evidence validator are implemented; 61 tests, MCP smoke, and production dependency audit pass.
 - Evidence: `evidence/ab-001-results.md`, `evidence/ab-002-visual-results.md`, `evidence/ab-003-results.md`, and all three experiment metadata files.
 - What was just tried: identical complex festival-site prompts were run in isolated plugin and normal-Codex tasks; both test suites, both viewport flows, source requirements, accessibility details, and screenshots were independently checked.
 - Useful signal: targeted minimum-ten review can improve functional completeness and accessibility, but the visible design gain was marginal and latency regressed.
-- Next single action: replace repeated reviewer discovery and full-depth passes with a shared evidence packet plus lower-cost, time-bounded specialist checks while retaining ten independent verdicts.
-- Expected result: retain the approximately seven-point quality advantage while cutting the 4.74× duration ratio substantially.
+- Next single action: run `experiments/ab-004/RUN.md` with a new website prompt and hidden assignment labels.
+- Expected result: retain ten independent verdicts and the quality advantage while bringing treatment duration to no more than 2× baseline.
 - Do not repeat: do not treat AB-003 as blinded evidence, because the treatment labels were revealed before adjudication. Use a fresh unseen fixture and conceal assignment until raw scores are recorded.

@@ -1,14 +1,14 @@
-# AI Prompt Orchestrator v0.2
+# AI Prompt Orchestrator v0.3
 
 This is a local proof of the proposed paid Codex workflow:
 
 1. A thin Codex plugin calls a local MCP server.
 2. The server checks the account entitlement on every tool call.
-3. Substantive prompts receive an improved task brief and at least ten targeted reviewer profiles.
+3. Substantive prompts receive an improved task brief and exactly ten targeted reviewer profiles.
 4. Minor follow-ups bypass the review panel.
 5. Deactivating the account blocks the next server request without uninstalling the plugin.
 
-Normal interface work receives exactly ten passes, including two specialists that inspect rendered desktop and mobile screenshots. Independent specialists run in bounded parallel waves; the final arbiter remains last. A clean first implementation exits without a repair cycle, while a failed gate allows one focused repair and reruns only affected checks.
+Normal interface work receives exactly ten passes, including two specialists that inspect rendered desktop and mobile screenshots. v0.3 adds a versioned review contract, one task-local evidence packet, tiered reviewer budgets, a discovery and gate phase before specialist waves, fail-closed evidence validation, and task-local latency telemetry. Independent specialists run in bounded parallel waves; the final arbiter remains last. A clean first implementation exits without a repair cycle, while a failed gate allows one focused repair and reruns only affected checks.
 
 The server does not call an LLM in this version. Codex is expected to run the selected reviewer prompts as read-only subagents and keep the main agent as the only writer.
 
@@ -18,14 +18,24 @@ The server does not call an LLM in this version. Codex is expected to run the se
 pnpm install
 pnpm test
 pnpm smoke
+pnpm audit --prod
 ```
 
 Expected smoke-test result:
 
-- `demo-active` receives at least ten reviewers.
+- `demo-active` receives exactly ten reviewers.
 - A website request receives ten reviewers, screenshot-grounded visual QA, parallel waves, and a one-repair cap.
+- A v0.3 website plan includes evidence-packet, budget, deterministic-gate, and telemetry contracts.
 - The test changes that account to inactive in an isolated temporary entitlement file.
 - Its next MCP call returns `subscription_inactive`.
+
+Validate a completed task-local evidence packet before allowing a final clean result:
+
+```powershell
+pnpm validate:evidence <path-to-packet.json> --plan=<returned-review-plan.json>
+```
+
+The validator fails closed when the packet is not bound to the returned plan, required gates or generated UI measurements are missing, evidence paths escape the task directory, fresh UI evidence or ten reviewer outcomes are missing, or the final ready status is absent.
 
 The tracked development accounts live in `data/entitlements.json`:
 
