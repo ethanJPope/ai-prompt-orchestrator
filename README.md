@@ -37,6 +37,20 @@ pnpm validate:evidence <path-to-packet.json> --plan=<returned-review-plan.json>
 
 The validator fails closed when the packet is not bound to the returned plan, required gates or generated UI measurements are missing, evidence paths escape the task directory, fresh UI evidence or ten reviewer outcomes are missing, or the final ready status is absent.
 
+For a blinded plugin/no-plugin website comparison, use the stricter pair contract:
+
+```powershell
+pnpm validate:comparison <run-a.json> <run-b.json>
+```
+
+Each run must include the same prompt hash, starter fingerprint, model, and reasoning setting; trustworthy start/finish timing; exact desktop and mobile screenshot evidence; zero console errors and warnings; every required interaction check; and a complete final response. The command reports the timing ratio and fails closed on missing evidence. The repeatable protocol and the next copy-paste task are in `experiments/ab-005/RUN.md` and `experiments/ab-005/original-prompt.md`.
+
+To verify the prompt identity constants before a run:
+
+```powershell
+pnpm hash:comparison-prompt experiments/ab-005/original-prompt.md
+```
+
 The tracked development accounts live in `data/entitlements.json`:
 
 - `demo-active`

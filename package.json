@@ -9,6 +9,8 @@
     "start": "node src/server.mjs",
     "setup:plugin": "node scripts/configure-local-plugin.mjs",
     "validate:evidence": "node scripts/validate-evidence-packet.mjs",
+    "validate:comparison": "node scripts/validate-comparison.mjs",
+    "hash:comparison-prompt": "node scripts/hash-comparison-prompt.mjs",
     "test": "node --test",
     "smoke": "node scripts/smoke.mjs",
     "entitlement": "node scripts/set-entitlement.mjs"

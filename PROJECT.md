@@ -1,6 +1,6 @@
 # Project State
 
-Last verified: 2026-08-03
+Last verified: 2026-08-04
 
 ## Stage
 
@@ -36,6 +36,8 @@ Version 0.2 was exercised in trial 003. Visual-interface work received exactly t
 - Review plans expose bounded parallel waves, a one-repair cap, and clean-pass early exit.
 - Manual entitlement changes take effect on the next request.
 - Unit and MCP smoke tests pass.
+- A fail-closed pair validator now checks blinded A/B timing, controls, screenshots, browser diagnostics, interaction coverage, and final-response completeness.
+- AB-005 contains a repeatable protocol and a fresh Afterimage website prompt whose task identity can be hashed consistently even when each run generates a different opaque ID.
 - The dependency audit, plugin validator, skill validator, package-boundary test, and credential-pattern scan pass.
 
 ## Not in v1
@@ -48,14 +50,14 @@ Version 0.2 was exercised in trial 003. Visual-interface work received exactly t
 
 ## Next action
 
-Create the task-local evidence packet during a fresh blinded AB-004 website trial, run the v0.3 workflow in both treatment and baseline tasks, and compare quality and wall-clock time against the 2× target.
+Run the fresh blinded AB-005 website trial in two Codex chats, collect both thread deep links and their `work/comparison-run.json` packages, validate the pair, and compare quality and wall-clock time against the 2× target.
 
 ## Restart packet
 
-- Stopping point: v0.3 contract and fail-closed evidence validator are implemented; 61 tests, MCP smoke, and production dependency audit pass.
+- Stopping point: v0.3 contracts, fail-closed evidence validators, and the AB-005 comparison protocol are implemented; the full test suite passes.
 - Evidence: `evidence/ab-001-results.md`, `evidence/ab-002-visual-results.md`, `evidence/ab-003-results.md`, and all three experiment metadata files.
 - What was just tried: identical complex festival-site prompts were run in isolated plugin and normal-Codex tasks; both test suites, both viewport flows, source requirements, accessibility details, and screenshots were independently checked.
 - Useful signal: targeted minimum-ten review can improve functional completeness and accessibility, but the visible design gain was marginal and latency regressed.
-- Next single action: run `experiments/ab-004/RUN.md` with a new website prompt and hidden assignment labels.
+- Next single action: run `experiments/ab-005/RUN.md` with the exact prompt in `experiments/ab-005/original-prompt.md` and hidden assignment labels.
 - Expected result: retain ten independent verdicts and the quality advantage while bringing treatment duration to no more than 2× baseline.
 - Do not repeat: do not treat AB-003 as blinded evidence, because the treatment labels were revealed before adjudication. Use a fresh unseen fixture and conceal assignment until raw scores are recorded.
