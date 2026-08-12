@@ -7,6 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "node src/server.mjs",
+    "dashboard": "node dashboard/server.mjs",
     "setup:plugin": "node scripts/configure-local-plugin.mjs",
     "validate:evidence": "node scripts/validate-evidence-packet.mjs",
     "validate:comparison": "node scripts/validate-comparison.mjs",

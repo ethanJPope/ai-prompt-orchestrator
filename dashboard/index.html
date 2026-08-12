@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101315" />
+    <title>Orchestrator Observatory</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Dashboard navigation">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">O</div>
+          <div><strong>Observatory</strong><span>AI Prompt Orchestrator</span></div>
+        </div>
+        <button class="mobile-close" id="close-nav" aria-label="Close navigation">×</button>
+        <nav class="nav-list">
+          <button class="nav-item active" data-view="overview"><span>01</span>Overview</button>
+          <button class="nav-item" data-view="experiments"><span>02</span>Experiments</button>
+          <button class="nav-item" data-view="reviewers"><span>03</span>Reviewer registry</button>
+          <button class="nav-item" data-view="evidence"><span>04</span>Evidence contracts</button>
+          <button class="nav-item" data-view="files"><span>05</span>Project files</button>
+          <button class="nav-item" data-view="simulator"><span>06</span>Plan simulator</button>
+        </nav>
+        <div class="sidebar-footer"><span class="status-dot"></span>Local read-only view<br /><small>v0.3 feasibility prototype</small></div>
+      </aside>
+      <main class="main-content">
+        <header class="topbar">
+          <button class="menu-toggle" id="open-nav" aria-label="Open navigation">☰</button>
+          <div class="crumb">RESEARCH CONSOLE <span>/</span> <strong id="view-label">OVERVIEW</strong></div>
+          <div class="topbar-meta"><span class="live-dot"></span>Local data snapshot <span class="date-stamp">12 AUG 2026</span></div>
+        </header>
+        <div id="app" class="view-container"></div>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
