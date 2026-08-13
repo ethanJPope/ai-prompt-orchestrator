@@ -28,6 +28,7 @@ server.registerTool(
       accountId: z.string(),
       active: z.boolean(),
       status: z.string(),
+      decision: z.enum(["allowed", "subscription_inactive"]),
       plan: z.string().nullable().optional(),
       reason: z.string(),
     },
@@ -79,6 +80,7 @@ server.registerTool(
     const response = reviewResponseSchema.parse({
       accountId: account_id,
       entitlementStatus: entitlement.status,
+      accessDecision: "allowed",
       ...plan,
     });
     return {

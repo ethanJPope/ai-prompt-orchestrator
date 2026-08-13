@@ -29,6 +29,41 @@ Expected smoke-test result:
 - The test changes that account to inactive in an isolated temporary entitlement file.
 - Its next MCP call returns `subscription_inactive`.
 
+## Local backend v1
+
+The repository now contains two local server surfaces:
+
+- `src/server.mjs` is the stdio MCP server started by the Codex plugin. It exposes `check_entitlement` and `prepare_review`.
+- `dashboard/server.mjs` is the local HTTP backend for the Observatory. Start it with:
+
+```powershell
+pnpm dashboard
+```
+
+It listens on `http://localhost:4321` by default. Set `DASHBOARD_PORT` to use another port.
+
+The local HTTP API includes:
+
+```text
+POST /api/runs
+GET  /api/runs
+GET  /api/runs/:id
+GET  /api/runs/:id/events       # Server-Sent Events
+GET  /api/account
+POST /api/account/activate
+POST /api/account/deactivate
+GET  /api/customer/stats
+GET  /api/business/stats
+```
+
+Runs are memory-backed while active and persisted as task-local JSON snapshots under the operating system temporary directory. Set `ORCHESTRATOR_RUNS_PATH` to choose a local storage directory. Each packet records the run and correlation IDs, plan hash, current phase, reviewer statuses, gates, structured messages, wave handoffs, contradictions, arbiter status, and timing.
+
+Activation and deactivation update the same local entitlement file used by the MCP server, so the next MCP request returns either an allowed decision or `subscription_inactive`. This remains a demo boundary, not authentication.
+
+### macOS Monterey
+
+The code uses portable Node.js APIs and the MCP SDK declares Node.js 18 or newer, but the current dependency tree includes a package requiring Node.js 20 or newer. Use Node.js 22 LTS on Monterey. Node.js 24's prebuilt macOS binaries require macOS 13.5 or newer, so Node.js 24 is not the right installation for Monterey. Install dependencies with `pnpm install`, run `pnpm test`, then use `pnpm dashboard` and `pnpm smoke`.
+
 Validate a completed task-local evidence packet before allowing a final clean result:
 
 ```powershell

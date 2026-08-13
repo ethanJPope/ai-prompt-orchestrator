@@ -1,0 +1,432 @@
+{
+  "accountId": "demo-active",
+  "entitlementStatus": "active",
+  "accessDecision": "allowed",
+  "schemaVersion": "0.3",
+  "correlationId": "614852ea-158e-40f8-93d2-ea4faece609c",
+  "substantive": true,
+  "bypassReason": null,
+  "clarifyingQuestions": [],
+  "enhancedPrompt": "Substantive engineering task\n\nOriginal request: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey.\nProject context: Node.js 0.3 local prototype in D:\\ai-prompt-orchestrator with an existing stdio MCP server and localhost Observatory dashboard. Keep data local and file/memory-backed; maintain reviewer read-only boundaries.\n\nExecution contract:\n- Resolve material ambiguity before implementation.\n- Keep reviewer agents read-only; only the primary agent may edit.\n- Before wave 1, create one fresh task-local JSON evidence packet with the required fields, a timestamp, and a hash; give every reviewer the same packet reference.\n- Use the primary agent as the collaboration broker: reviewers consume the shared packet and prior bounded findings, then return structured messages for atomic append; do not work from isolated copies.\n- Each reviewer must confirm, contradict, or extend prior findings when applicable, publish at most three evidence-backed messages, and avoid repeating findings without new evidence.\n- Complete the supplied wave handoffs: discovery publishes the repository map and evidence gaps; specialist waves consume and enrich them; visual reviewers consume the shared gates and findings; the arbiter consumes the deduplicated packet and unresolved contradictions.\n- Complete all 10 assigned evaluation passes. Run independent specialists concurrently in the supplied waves, with the final arbiter last.\n- Honor each reviewer's budget, record completion or timeout, and do not replace a timed-out reviewer with an extra unplanned agent.\n- If the first implementation passes its acceptance checks and reviewers find no material issue, stop without a repair or repeat review.\n- If repair is necessary, make one bounded correction pass and rerun only affected checks before the final arbiter.\n- Cite direct repository evidence and exact validation results.\n- Preserve existing behavior unless a change is explicitly approved.\n- Return one consolidated result without duplicate or contradictory findings.\n- The treatment target is no more than 2x normal Codex wall-clock time; record enough timing evidence to evaluate that target.",
+  "taskClass": "general-engineering",
+  "reviewerCount": 10,
+  "reviewers": [
+    {
+      "order": 1,
+      "id": "integration-isolation",
+      "name": "External Integrations and Failure Isolation",
+      "phase": "review",
+      "budget": {
+        "tier": "light",
+        "reasoningEffort": "low",
+        "timeoutMs": 120000,
+        "maxToolCalls": 6,
+        "maxFindings": 3,
+        "inputArtifact": "shared-evidence-packet"
+      },
+      "prompt": "You are the External Integrations and Failure Isolation reviewer.\nPurpose: Review third-party boundaries, retries, timeouts, and reconciliation.\nWork read-only. Do not edit files or make external changes.\nStart with the shared task-local evidence packet supplied by the primary agent; do not rediscover the whole repository unless it reports an evidence gap.\nBudget: 120000ms, at most 6 tool calls, and at most 3 findings. Stop and report a timeout or evidence gap when the budget is exhausted.\nReturn at most three confirmed findings, with supporting file or test evidence, severity, uncertainty, and the smallest repair.\nDo not repeat another reviewer's role or invent issues to justify your participation.\nTask class: general-engineering\nTask: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey."
+    },
+    {
+      "order": 2,
+      "id": "authorization",
+      "name": "Authentication, Authorization, and Trust Boundaries",
+      "phase": "review",
+      "budget": {
+        "tier": "light",
+        "reasoningEffort": "low",
+        "timeoutMs": 120000,
+        "maxToolCalls": 6,
+        "maxFindings": 3,
+        "inputArtifact": "shared-evidence-packet"
+      },
+      "prompt": "You are the Authentication, Authorization, and Trust Boundaries reviewer.\nPurpose: Review identity, access control, ownership, privilege, and trust boundaries.\nWork read-only. Do not edit files or make external changes.\nStart with the shared task-local evidence packet supplied by the primary agent; do not rediscover the whole repository unless it reports an evidence gap.\nBudget: 120000ms, at most 6 tool calls, and at most 3 findings. Stop and report a timeout or evidence gap when the budget is exhausted.\nReturn at most three confirmed findings, with supporting file or test evidence, severity, uncertainty, and the smallest repair.\nDo not repeat another reviewer's role or invent issues to justify your participation.\nTask class: general-engineering\nTask: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey."
+    },
+    {
+      "order": 3,
+      "id": "background-idempotency",
+      "name": "Background Jobs, Scheduling, and Idempotency",
+      "phase": "review",
+      "budget": {
+        "tier": "light",
+        "reasoningEffort": "low",
+        "timeoutMs": 120000,
+        "maxToolCalls": 6,
+        "maxFindings": 3,
+        "inputArtifact": "shared-evidence-packet"
+      },
+      "prompt": "You are the Background Jobs, Scheduling, and Idempotency reviewer.\nPurpose: Review duplicate execution, retries, queues, shutdown, and reconciliation.\nWork read-only. Do not edit files or make external changes.\nStart with the shared task-local evidence packet supplied by the primary agent; do not rediscover the whole repository unless it reports an evidence gap.\nBudget: 120000ms, at most 6 tool calls, and at most 3 findings. Stop and report a timeout or evidence gap when the budget is exhausted.\nReturn at most three confirmed findings, with supporting file or test evidence, severity, uncertainty, and the smallest repair.\nDo not repeat another reviewer's role or invent issues to justify your participation.\nTask class: general-engineering\nTask: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey."
+    },
+    {
+      "order": 4,
+      "id": "data-integrity",
+      "name": "Data Model and Persistence Integrity",
+      "phase": "review",
+      "budget": {
+        "tier": "light",
+        "reasoningEffort": "low",
+        "timeoutMs": 120000,
+        "maxToolCalls": 6,
+        "maxFindings": 3,
+        "inputArtifact": "shared-evidence-packet"
+      },
+      "prompt": "You are the Data Model and Persistence Integrity reviewer.\nPurpose: Review schemas, constraints, transactions, concurrency, and migrations.\nWork read-only. Do not edit files or make external changes.\nStart with the shared task-local evidence packet supplied by the primary agent; do not rediscover the whole repository unless it reports an evidence gap.\nBudget: 120000ms, at most 6 tool calls, and at most 3 findings. Stop and report a timeout or evidence gap when the budget is exhausted.\nReturn at most three confirmed findings, with supporting file or test evidence, severity, uncertainty, and the smallest repair.\nDo not repeat another reviewer's role or invent issues to justify your participation.\nTask class: general-engineering\nTask: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey."
+    },
+    {
+      "order": 5,
+      "id": "domain-invariants",
+      "name": "Business Logic and Domain Invariants",
+      "phase": "review",
+      "budget": {
+        "tier": "light",
+        "reasoningEffort": "low",
+        "timeoutMs": 120000,
+        "maxToolCalls": 6,
+        "maxFindings": 3,
+        "inputArtifact": "shared-evidence-packet"
+      },
+      "prompt": "You are the Business Logic and Domain Invariants reviewer.\nPurpose: Trace business rules and confirm they are enforced consistently.\nWork read-only. Do not edit files or make external changes.\nStart with the shared task-local evidence packet supplied by the primary agent; do not rediscover the whole repository unless it reports an evidence gap.\nBudget: 120000ms, at most 6 tool calls, and at most 3 findings. Stop and report a timeout or evidence gap when the budget is exhausted.\nReturn at most three confirmed findings, with supporting file or test evidence, severity, uncertainty, and the smallest repair.\nDo not repeat another reviewer's role or invent issues to justify your participation.\nTask class: general-engineering\nTask: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey."
+    },
+    {
+      "order": 6,
+      "id": "input-contracts",
+      "name": "Input Validation and API Contracts",
+      "phase": "review",
+      "budget": {
+        "tier": "light",
+        "reasoningEffort": "low",
+        "timeoutMs": 120000,
+        "maxToolCalls": 6,
+        "maxFindings": 3,
+        "inputArtifact": "shared-evidence-packet"
+      },
+      "prompt": "You are the Input Validation and API Contracts reviewer.\nPurpose: Review validation and contracts across every external boundary.\nWork read-only. Do not edit files or make external changes.\nStart with the shared task-local evidence packet supplied by the primary agent; do not rediscover the whole repository unless it reports an evidence gap.\nBudget: 120000ms, at most 6 tool calls, and at most 3 findings. Stop and report a timeout or evidence gap when the budget is exhausted.\nReturn at most three confirmed findings, with supporting file or test evidence, severity, uncertainty, and the smallest repair.\nDo not repeat another reviewer's role or invent issues to justify your participation.\nTask class: general-engineering\nTask: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey."
+    },
+    {
+      "order": 7,
+      "id": "testing-strategy",
+      "name": "Testing Strategy and Quality Gates",
+      "phase": "review",
+      "budget": {
+        "tier": "light",
+        "reasoningEffort": "low",
+        "timeoutMs": 120000,
+        "maxToolCalls": 6,
+        "maxFindings": 3,
+        "inputArtifact": "shared-evidence-packet"
+      },
+      "prompt": "You are the Testing Strategy and Quality Gates reviewer.\nPurpose: Build a risk-based test matrix and verify meaningful behavior.\nWork read-only. Do not edit files or make external changes.\nStart with the shared task-local evidence packet supplied by the primary agent; do not rediscover the whole repository unless it reports an evidence gap.\nBudget: 120000ms, at most 6 tool calls, and at most 3 findings. Stop and report a timeout or evidence gap when the budget is exhausted.\nReturn at most three confirmed findings, with supporting file or test evidence, severity, uncertainty, and the smallest repair.\nDo not repeat another reviewer's role or invent issues to justify your participation.\nTask class: general-engineering\nTask: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey."
+    },
+    {
+      "order": 8,
+      "id": "architecture-boundaries",
+      "name": "Architecture and Module Boundaries",
+      "phase": "review",
+      "budget": {
+        "tier": "light",
+        "reasoningEffort": "low",
+        "timeoutMs": 120000,
+        "maxToolCalls": 6,
+        "maxFindings": 3,
+        "inputArtifact": "shared-evidence-packet"
+      },
+      "prompt": "You are the Architecture and Module Boundaries reviewer.\nPurpose: Check ownership, coupling, dependencies, and architectural drift.\nWork read-only. Do not edit files or make external changes.\nStart with the shared task-local evidence packet supplied by the primary agent; do not rediscover the whole repository unless it reports an evidence gap.\nBudget: 120000ms, at most 6 tool calls, and at most 3 findings. Stop and report a timeout or evidence gap when the budget is exhausted.\nReturn at most three confirmed findings, with supporting file or test evidence, severity, uncertainty, and the smallest repair.\nDo not repeat another reviewer's role or invent issues to justify your participation.\nTask class: general-engineering\nTask: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey."
+    },
+    {
+      "order": 9,
+      "id": "repository-discovery",
+      "name": "Repository Discovery and System Map",
+      "phase": "discovery",
+      "budget": {
+        "tier": "light",
+        "reasoningEffort": "low",
+        "timeoutMs": 120000,
+        "maxToolCalls": 6,
+        "maxFindings": 3,
+        "inputArtifact": "shared-evidence-packet"
+      },
+      "prompt": "You are the Repository Discovery and System Map reviewer.\nPurpose: Map the system and identify evidence gaps before conclusions.\nWork read-only. Do not edit files or make external changes.\nStart with the shared task-local evidence packet supplied by the primary agent; do not rediscover the whole repository unless it reports an evidence gap.\nBudget: 120000ms, at most 6 tool calls, and at most 3 findings. Stop and report a timeout or evidence gap when the budget is exhausted.\nReturn at most three confirmed findings, with supporting file or test evidence, severity, uncertainty, and the smallest repair.\nDo not repeat another reviewer's role or invent issues to justify your participation.\nTask class: general-engineering\nTask: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey."
+    },
+    {
+      "order": 10,
+      "id": "final-senior-review",
+      "name": "Final Senior-Engineer Review and Consolidation",
+      "phase": "arbiter",
+      "budget": {
+        "tier": "arbiter",
+        "reasoningEffort": "high",
+        "timeoutMs": 180000,
+        "maxToolCalls": 8,
+        "maxFindings": 3,
+        "inputArtifact": "shared-evidence-packet-and-review-findings"
+      },
+      "prompt": "You are the Final Senior-Engineer Review and Consolidation reviewer.\nPurpose: Skeptically arbitrate all evidence, remove duplicates, and set final status.\nWork read-only. Do not edit files or make external changes.\nStart with the shared task-local evidence packet supplied by the primary agent; do not rediscover the whole repository unless it reports an evidence gap.\nBudget: 180000ms, at most 8 tool calls, and at most 3 findings. Stop and report a timeout or evidence gap when the budget is exhausted.\nReturn at most three confirmed findings, with supporting file or test evidence, severity, uncertainty, and the smallest repair.\nDo not repeat another reviewer's role or invent issues to justify your participation.\nArbitrate the shared findings packet and deterministic gate results. Do not perform broad repository rediscovery unless a specific contradiction or evidence gap requires it.\nTask class: general-engineering\nTask: Implement the requested backend v1 for the AI Prompt Orchestrator: local MCP tools, entitlement checks, review-plan generation, run tracking, SSE progress, customer activation/deactivation demo, customer/business stats, task-local event/evidence packets, and clean storage interfaces. Preserve the existing plugin and Observatory, exclude payments, OAuth, hosted database, uploads, API keys, and automatic interception. Verify whether it can run on macOS Monterey."
+    }
+  ],
+  "reviewBudgets": {
+    "integration-isolation": {
+      "tier": "light",
+      "reasoningEffort": "low",
+      "timeoutMs": 120000,
+      "maxToolCalls": 6,
+      "maxFindings": 3,
+      "inputArtifact": "shared-evidence-packet"
+    },
+    "authorization": {
+      "tier": "light",
+      "reasoningEffort": "low",
+      "timeoutMs": 120000,
+      "maxToolCalls": 6,
+      "maxFindings": 3,
+      "inputArtifact": "shared-evidence-packet"
+    },
+    "background-idempotency": {
+      "tier": "light",
+      "reasoningEffort": "low",
+      "timeoutMs": 120000,
+      "maxToolCalls": 6,
+      "maxFindings": 3,
+      "inputArtifact": "shared-evidence-packet"
+    },
+    "data-integrity": {
+      "tier": "light",
+      "reasoningEffort": "low",
+      "timeoutMs": 120000,
+      "maxToolCalls": 6,
+      "maxFindings": 3,
+      "inputArtifact": "shared-evidence-packet"
+    },
+    "domain-invariants": {
+      "tier": "light",
+      "reasoningEffort": "low",
+      "timeoutMs": 120000,
+      "maxToolCalls": 6,
+      "maxFindings": 3,
+      "inputArtifact": "shared-evidence-packet"
+    },
+    "input-contracts": {
+      "tier": "light",
+      "reasoningEffort": "low",
+      "timeoutMs": 120000,
+      "maxToolCalls": 6,
+      "maxFindings": 3,
+      "inputArtifact": "shared-evidence-packet"
+    },
+    "testing-strategy": {
+      "tier": "light",
+      "reasoningEffort": "low",
+      "timeoutMs": 120000,
+      "maxToolCalls": 6,
+      "maxFindings": 3,
+      "inputArtifact": "shared-evidence-packet"
+    },
+    "architecture-boundaries": {
+      "tier": "light",
+      "reasoningEffort": "low",
+      "timeoutMs": 120000,
+      "maxToolCalls": 6,
+      "maxFindings": 3,
+      "inputArtifact": "shared-evidence-packet"
+    },
+    "repository-discovery": {
+      "tier": "light",
+      "reasoningEffort": "low",
+      "timeoutMs": 120000,
+      "maxToolCalls": 6,
+      "maxFindings": 3,
+      "inputArtifact": "shared-evidence-packet"
+    },
+    "final-senior-review": {
+      "tier": "arbiter",
+      "reasoningEffort": "high",
+      "timeoutMs": 180000,
+      "maxToolCalls": 8,
+      "maxFindings": 3,
+      "inputArtifact": "shared-evidence-packet-and-review-findings"
+    }
+  },
+  "evidencePacket": {
+    "required": true,
+    "location": "task-local",
+    "format": "json",
+    "requiredFields": [
+      "taskSummary",
+      "acceptanceCriteria",
+      "changedFiles",
+      "testResults",
+      "knownRisks",
+      "privacyBoundary",
+      "implementationHash",
+      "implementationFiles",
+      "plannedReviewerIds",
+      "plannedReviewerBudgets",
+      "arbiterReviewerId",
+      "discoveryReviewerIds",
+      "planHash"
+    ],
+    "appendOnlyFields": [
+      "deterministicGateResults",
+      "reviewerFindings",
+      "telemetry"
+    ],
+    "phases": [
+      "before-review: create packet after implementation and initial tests",
+      "before-visual-review: append deterministic gate results and fresh UI evidence",
+      "before-arbiter: append bounded reviewer outcomes",
+      "final: append final status and timing without rewriting prior evidence"
+    ],
+    "visualFields": [],
+    "privacyRules": [
+      "Keep the packet task-local and do not send it to the MCP server.",
+      "Do not include credentials, secrets, raw transcripts, or customer source code beyond the minimum evidence needed by reviewers."
+    ],
+    "freshnessRule": "Capture after implementation and before discovery; after any repair, invalidate UI screenshots and recapture them before visual review."
+  },
+  "deterministicGates": [
+    {
+      "id": "acceptance-coverage",
+      "description": "Every explicit acceptance requirement is mapped to evidence or marked unresolved.",
+      "required": true,
+      "evidence": "requirements checklist in the shared evidence packet"
+    },
+    {
+      "id": "tests-and-build",
+      "description": "Relevant tests and build or delivery checks pass from a clean process.",
+      "required": true,
+      "evidence": "test and build output in the shared evidence packet"
+    },
+    {
+      "id": "privacy-boundary",
+      "description": "No secrets, customer data, or unexpected external writes cross the review boundary.",
+      "required": true,
+      "evidence": "source inspection and command log"
+    }
+  ],
+  "telemetry": {
+    "location": "task-local",
+    "correlationId": "614852ea-158e-40f8-93d2-ea4faece609c",
+    "recordFields": [
+      "startedAt",
+      "completedAt",
+      "totalDurationMs",
+      "waveDurations",
+      "reviewerStatuses",
+      "repairPasses",
+      "deterministicGateResults"
+    ],
+    "privacyRules": [
+      "Record timing and status metadata only; do not record prompt text, source contents, secrets, or raw reviewer transcripts.",
+      "Keep telemetry task-local until an explicit privacy decision authorizes a hosted service."
+    ]
+  },
+  "collaboration": {
+    "transport": "task-local-shared-packet",
+    "broker": "primary-agent",
+    "messageFields": [
+      "messageId",
+      "reviewerId",
+      "wave",
+      "kind",
+      "claim",
+      "evidenceRefs",
+      "severity",
+      "confidence",
+      "relatedMessageIds",
+      "nextReviewerAction"
+    ],
+    "publishRules": [
+      "Publish at most three evidence-backed findings per reviewer through the primary agent.",
+      "Label each message as new, confirms, contradicts, or extends a prior finding.",
+      "Include exact evidence references and uncertainty; never publish raw transcripts or source dumps.",
+      "Do not edit the shared packet directly; return messages for the primary agent to append atomically."
+    ],
+    "consumeRules": [
+      "Read the shared packet and all prior reviewer messages before starting analysis.",
+      "Treat earlier findings as hypotheses to confirm, contradict, or extend rather than rediscovering them.",
+      "Only investigate beyond the shared packet when a contradiction or evidence gap is present.",
+      "Do not repeat a finding unless adding materially new evidence or changing its severity/confidence."
+    ],
+    "waveHandoffs": [
+      {
+        "from": "discovery",
+        "to": "specialist-waves",
+        "artifact": "repository-map-and-evidence-gaps"
+      },
+      {
+        "from": "specialist-waves",
+        "to": "visual-review",
+        "artifact": "shared-findings-and-gate-results"
+      },
+      {
+        "from": "all-non-arbiter-waves",
+        "to": "arbiter",
+        "artifact": "deduplicated-findings-and-unresolved-contradictions"
+      }
+    ],
+    "privacyRules": [
+      "Keep messages task-local.",
+      "Do not include credentials, secrets, customer source code, raw transcripts, or full prompts."
+    ]
+  },
+  "executionPolicy": {
+    "maxParallelism": 4,
+    "maxRepairPasses": 1,
+    "earlyExitAfterCleanRequiredPasses": true,
+    "latencyTargetMultiplier": 2,
+    "reviewWaves": [
+      {
+        "mode": "parallel",
+        "reviewerIds": [
+          "repository-discovery"
+        ],
+        "gateIds": [],
+        "maxParallelism": 1,
+        "timeoutMs": 120000
+      },
+      {
+        "mode": "gate",
+        "reviewerIds": [],
+        "gateIds": [
+          "acceptance-coverage",
+          "tests-and-build",
+          "privacy-boundary"
+        ],
+        "maxParallelism": 0,
+        "timeoutMs": 0
+      },
+      {
+        "mode": "parallel",
+        "reviewerIds": [
+          "integration-isolation",
+          "authorization",
+          "background-idempotency",
+          "data-integrity"
+        ],
+        "gateIds": [],
+        "maxParallelism": 4,
+        "timeoutMs": 120000
+      },
+      {
+        "mode": "parallel",
+        "reviewerIds": [
+          "domain-invariants",
+          "input-contracts",
+          "testing-strategy",
+          "architecture-boundaries"
+        ],
+        "gateIds": [],
+        "maxParallelism": 4,
+        "timeoutMs": 120000
+      },
+      {
+        "mode": "sequential",
+        "reviewerIds": [
+          "final-senior-review"
+        ],
+        "gateIds": [],
+        "maxParallelism": 1,
+        "timeoutMs": 180000
+      }
+    ]
+  },
+  "planHash": "aec87e09a57d110ad642cad8690a86b3480b46d68c52e62264280a5f2a15fba6"
+}

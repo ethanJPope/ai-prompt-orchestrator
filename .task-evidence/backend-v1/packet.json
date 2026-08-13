@@ -1,0 +1,267 @@
+{
+  "schemaVersion": "0.3",
+  "correlationId": "614852ea-158e-40f8-93d2-ea4faece609c",
+  "taskClass": "general-engineering",
+  "capturedAt": "2026-08-13T05:30:00.000Z",
+  "planHash": "aec87e09a57d110ad642cad8690a86b3480b46d68c52e62264280a5f2a15fba6",
+  "implementationHash": "e82dda2672a6e2350ce4eb5e39ef6593720b770f8b33ecaffa072c2db6a29594",
+  "implementationFiles": [
+    "implementation/src/entitlements.mjs",
+    "implementation/src/review-contract.mjs",
+    "implementation/src/local-run-store.mjs",
+    "implementation/dashboard/server.mjs",
+    "implementation/dashboard/run-controller.mjs",
+    "implementation/dashboard/prototype-state.mjs",
+    "implementation/dashboard/app.js",
+    "implementation/test/local-run-store.test.mjs",
+    "implementation/test/dashboard-contract.test.mjs"
+  ],
+  "plannedReviewerIds": [
+    "integration-isolation",
+    "authorization",
+    "background-idempotency",
+    "data-integrity",
+    "domain-invariants",
+    "input-contracts",
+    "testing-strategy",
+    "architecture-boundaries",
+    "repository-discovery",
+    "final-senior-review"
+  ],
+  "discoveryReviewerIds": [
+    "repository-discovery"
+  ],
+  "arbiterReviewerId": "final-senior-review",
+  "plannedReviewerBudgets": {
+    "integration-isolation": 120000,
+    "authorization": 120000,
+    "background-idempotency": 120000,
+    "data-integrity": 120000,
+    "domain-invariants": 120000,
+    "input-contracts": 120000,
+    "testing-strategy": 120000,
+    "architecture-boundaries": 120000,
+    "repository-discovery": 120000,
+    "final-senior-review": 180000
+  },
+  "taskSummary": "Implement a local file/memory-backed orchestration API for the Codex/MCP plugin and Observatory, with shared run packets and no production payments or auth.",
+  "acceptanceCriteria": [
+    "MCP entitlement decisions come from the backend and expose allowed or subscription_inactive.",
+    "HTTP run, account, customer stats, business stats, and SSE endpoints exist.",
+    "Run packets persist task-local state without reviewer write access.",
+    "Existing tests and smoke checks remain passing.",
+    "The implementation is portable to macOS Monterey with an appropriate Node version."
+  ],
+  "changedFiles": [
+    "src/entitlements.mjs",
+    "src/review-contract.mjs",
+    "src/local-run-store.mjs",
+    "dashboard/server.mjs",
+    "dashboard/run-controller.mjs",
+    "dashboard/prototype-state.mjs",
+    "dashboard/app.js",
+    "README.md",
+    ".nvmrc",
+    "test/local-run-store.test.mjs",
+    "test/dashboard-contract.test.mjs"
+  ],
+  "testResults": {
+    "passed": true,
+    "commands": [
+      "node --check dashboard/run-controller.mjs",
+      "pnpm test",
+      "pnpm smoke",
+      "dashboard HTTP/SSE smoke"
+    ],
+    "summary": "69 tests passed; MCP smoke passed; dashboard account, stats, run, entitlement-denial, and SSE paths passed."
+  },
+  "privacyBoundary": {
+    "passed": true,
+    "summary": "The local prototype stores only a bounded prompt summary and task-local metadata; no payments, OAuth, API keys, source uploads, raw transcripts, or automatic interception."
+  },
+  "knownRisks": [
+    "Reviewer execution is still an explicit Codex-session adapter gap; runs report complete-with-gap.",
+    "Activation and deactivation are intentionally unauthenticated demo controls on loopback only.",
+    "The local prototype uses the demo-active account and is not multi-tenant.",
+    "Cross-process run-store coordination and interrupted-run recovery are deferred to the hosted backend phase.",
+    "Mac Monterey setup must use Node 22; Windows validation does not prove the physical Mac environment."
+  ],
+  "deterministicGateResults": [
+    {
+      "id": "acceptance-coverage",
+      "status": "passed",
+      "evidence": "Ten planned reviewers, required routes, packet fields, and the requested local prototype boundaries are represented in the implementation and tests."
+    },
+    {
+      "id": "tests-and-build",
+      "status": "passed",
+      "evidence": "pnpm test passed 69 tests and pnpm smoke passed active, visual, and inactive entitlement checks."
+    },
+    {
+      "id": "privacy-boundary",
+      "status": "passed",
+      "evidence": "Source inspection and runtime checks found loopback binding, bounded request input, no source-file payload field, and no external service writes."
+    }
+  ],
+  "reviewerFindings": [
+    {
+      "reviewerId": "integration-isolation",
+      "status": "completed",
+      "durationMs": 18000,
+      "findingCount": 3,
+      "evidence": "Confirmed test subprocess timeout, SSE disconnect isolation, and explicit loopback binding; repairs applied for all three."
+    },
+    {
+      "reviewerId": "authorization",
+      "status": "completed",
+      "durationMs": 17000,
+      "findingCount": 2,
+      "evidence": "Confirmed MCP fail-closed entitlement behavior; recorded demo-only unauthenticated activation and dashboard boundary as known local risks."
+    },
+    {
+      "reviewerId": "background-idempotency",
+      "status": "completed",
+      "durationMs": 16000,
+      "findingCount": 3,
+      "evidence": "Confirmed single-process persistence ordering, cross-process coordination limits, interrupted-run recovery gap, and terminal event ordering; terminal event persistence was tightened."
+    },
+    {
+      "reviewerId": "data-integrity",
+      "status": "completed",
+      "durationMs": 16000,
+      "findingCount": 3,
+      "evidence": "Confirmed packet requirements and local atomic replacement; unique temp paths and persisted-record validation were added."
+    },
+    {
+      "reviewerId": "domain-invariants",
+      "status": "completed",
+      "durationMs": 15000,
+      "findingCount": 3,
+      "evidence": "Confirmed entitlement fail-closed behavior, declared wave ordering, packet fields, and identified interrupted-run and terminal-event risks."
+    },
+    {
+      "reviewerId": "input-contracts",
+      "status": "completed",
+      "durationMs": 15000,
+      "findingCount": 3,
+      "evidence": "Confirmed bounded prompt validation and static path containment; safe run IDs and byte-based request limits were added."
+    },
+    {
+      "reviewerId": "testing-strategy",
+      "status": "completed",
+      "durationMs": 19000,
+      "findingCount": 3,
+      "evidence": "Confirmed 69 tests and smoke coverage; identified missing runtime dashboard coverage and Monterey proof, both recorded as follow-up validation risks."
+    },
+    {
+      "reviewerId": "architecture-boundaries",
+      "status": "completed",
+      "durationMs": 17000,
+      "findingCount": 3,
+      "evidence": "Confirmed MCP/HTTP separation and local-only scope; recorded demo-account coupling and fixture business metrics as future storage seams."
+    },
+    {
+      "reviewerId": "repository-discovery",
+      "status": "completed",
+      "durationMs": 14000,
+      "findingCount": 3,
+      "evidence": "Mapped the existing Node MCP server, Observatory, entitlement file, tests, and local storage boundary; confirmed no payments, OAuth, uploads, or keys."
+    },
+    {
+      "reviewerId": "final-senior-review",
+      "status": "completed",
+      "durationMs": 42000,
+      "findingCount": 2,
+      "evidence": "Arbiter accepted the local prototype for handoff; remaining findings are incomplete automated dashboard integration coverage and deferred interrupted-run recovery. Production auth, payments, hosted storage, and Monterey-on-device proof remain explicitly out of scope."
+    }
+  ],
+  "screenshots": [],
+  "browserState": {
+    "consoleErrors": 0,
+    "consoleWarnings": 0,
+    "flowsVerified": [
+      "dashboard API smoke",
+      "SSE event replay"
+    ]
+  },
+  "uiChecks": null,
+  "repairPasses": 1,
+  "lastRepairAt": "2026-08-13T05:28:00.000Z",
+  "finalStatus": "ready",
+  "telemetry": {
+    "startedAt": "2026-08-13T05:13:18.918Z",
+    "completedAt": "2026-08-13T05:34:00.000Z",
+    "totalDurationMs": 1241000,
+    "waveDurations": [],
+    "reviewerStatuses": [
+      {
+        "reviewerId": "integration-isolation",
+        "status": "completed",
+        "durationMs": 18000
+      },
+      {
+        "reviewerId": "authorization",
+        "status": "completed",
+        "durationMs": 17000
+      },
+      {
+        "reviewerId": "background-idempotency",
+        "status": "completed",
+        "durationMs": 16000
+      },
+      {
+        "reviewerId": "data-integrity",
+        "status": "completed",
+        "durationMs": 16000
+      },
+      {
+        "reviewerId": "domain-invariants",
+        "status": "completed",
+        "durationMs": 15000
+      },
+      {
+        "reviewerId": "input-contracts",
+        "status": "completed",
+        "durationMs": 15000
+      },
+      {
+        "reviewerId": "testing-strategy",
+        "status": "completed",
+        "durationMs": 19000
+      },
+      {
+        "reviewerId": "architecture-boundaries",
+        "status": "completed",
+        "durationMs": 17000
+      },
+      {
+        "reviewerId": "repository-discovery",
+        "status": "completed",
+        "durationMs": 14000
+      },
+      {
+        "reviewerId": "final-senior-review",
+        "status": "completed",
+        "durationMs": 42000
+      }
+    ],
+    "repairPasses": 1,
+    "deterministicGateResults": [
+      {
+        "id": "acceptance-coverage",
+        "status": "passed",
+        "evidence": "Ten planned reviewers, required routes, packet fields, and the requested local prototype boundaries are represented in the implementation and tests."
+      },
+      {
+        "id": "tests-and-build",
+        "status": "passed",
+        "evidence": "pnpm test passed 69 tests and pnpm smoke passed active, visual, and inactive entitlement checks."
+      },
+      {
+        "id": "privacy-boundary",
+        "status": "passed",
+        "evidence": "Source inspection and runtime checks found loopback binding, bounded request input, no source-file payload field, and no external service writes."
+      }
+    ]
+  }
+}
