@@ -248,6 +248,46 @@ function buildTelemetry(correlationId) {
   };
 }
 
+function buildCollaboration() {
+  return {
+    transport: "task-local-shared-packet",
+    broker: "primary-agent",
+    messageFields: [
+      "messageId",
+      "reviewerId",
+      "wave",
+      "kind",
+      "claim",
+      "evidenceRefs",
+      "severity",
+      "confidence",
+      "relatedMessageIds",
+      "nextReviewerAction",
+    ],
+    publishRules: [
+      "Publish at most three evidence-backed findings per reviewer through the primary agent.",
+      "Label each message as new, confirms, contradicts, or extends a prior finding.",
+      "Include exact evidence references and uncertainty; never publish raw transcripts or source dumps.",
+      "Do not edit the shared packet directly; return messages for the primary agent to append atomically.",
+    ],
+    consumeRules: [
+      "Read the shared packet and all prior reviewer messages before starting analysis.",
+      "Treat earlier findings as hypotheses to confirm, contradict, or extend rather than rediscovering them.",
+      "Only investigate beyond the shared packet when a contradiction or evidence gap is present.",
+      "Do not repeat a finding unless adding materially new evidence or changing its severity/confidence.",
+    ],
+    waveHandoffs: [
+      { from: "discovery", to: "specialist-waves", artifact: "repository-map-and-evidence-gaps" },
+      { from: "specialist-waves", to: "visual-review", artifact: "shared-findings-and-gate-results" },
+      { from: "all-non-arbiter-waves", to: "arbiter", artifact: "deduplicated-findings-and-unresolved-contradictions" },
+    ],
+    privacyRules: [
+      "Keep messages task-local.",
+      "Do not include credentials, secrets, customer source code, raw transcripts, or full prompts.",
+    ],
+  };
+}
+
 function reviewerPhase(agentId) {
   if (agentId === "final-senior-review") return "arbiter";
   if (agentId === "repository-discovery") return "discovery";
@@ -421,6 +461,7 @@ export function preparePlan(prompt, projectContext = "", options = {}) {
       evidencePacket: null,
       deterministicGates: [],
       telemetry: null,
+      collaboration: null,
       executionPolicy: null,
     };
     return { ...plan, planHash: hashReviewPlan(plan) };
@@ -435,6 +476,7 @@ export function preparePlan(prompt, projectContext = "", options = {}) {
   const evidencePacket = buildEvidencePacket(taskClass);
   const deterministicGates = buildDeterministicGates(taskClass);
   const telemetry = buildTelemetry(correlationId);
+  const collaboration = buildCollaboration();
   const reviewWaves = buildReviewWaves(
     reviewers,
     4,
@@ -451,6 +493,9 @@ export function preparePlan(prompt, projectContext = "", options = {}) {
     "- Resolve material ambiguity before implementation.",
     "- Keep reviewer agents read-only; only the primary agent may edit.",
     "- Before wave 1, create one fresh task-local JSON evidence packet with the required fields, a timestamp, and a hash; give every reviewer the same packet reference.",
+    "- Use the primary agent as the collaboration broker: reviewers consume the shared packet and prior bounded findings, then return structured messages for atomic append; do not work from isolated copies.",
+    "- Each reviewer must confirm, contradict, or extend prior findings when applicable, publish at most three evidence-backed messages, and avoid repeating findings without new evidence.",
+    "- Complete the supplied wave handoffs: discovery publishes the repository map and evidence gaps; specialist waves consume and enrich them; visual reviewers consume the shared gates and findings; the arbiter consumes the deduplicated packet and unresolved contradictions.",
     `- Complete all ${reviewers.length} assigned evaluation passes. Run independent specialists concurrently in the supplied waves, with the final arbiter last.`,
     "- Honor each reviewer's budget, record completion or timeout, and do not replace a timed-out reviewer with an extra unplanned agent.",
     "- If the first implementation passes its acceptance checks and reviewers find no material issue, stop without a repair or repeat review.",
@@ -481,6 +526,7 @@ export function preparePlan(prompt, projectContext = "", options = {}) {
     evidencePacket,
     deterministicGates,
     telemetry,
+    collaboration,
     executionPolicy: {
       maxParallelism: 4,
       maxRepairPasses: 1,

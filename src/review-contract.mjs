@@ -40,6 +40,20 @@ export const telemetrySchema = z.object({
   privacyRules: z.array(nonEmptyString).min(1),
 });
 
+export const collaborationSchema = z.object({
+  transport: z.literal("task-local-shared-packet"),
+  broker: z.literal("primary-agent"),
+  messageFields: z.array(nonEmptyString).min(1),
+  publishRules: z.array(nonEmptyString).min(1),
+  consumeRules: z.array(nonEmptyString).min(1),
+  waveHandoffs: z.array(z.object({
+    from: nonEmptyString,
+    to: nonEmptyString,
+    artifact: nonEmptyString,
+  })).min(1),
+  privacyRules: z.array(nonEmptyString).min(1),
+});
+
 export const reviewerSchema = z.object({
   order: z.number().int().positive(),
   id: nonEmptyString,
@@ -80,6 +94,7 @@ export const reviewPlanFields = {
   evidencePacket: evidencePacketSchema.nullable(),
   deterministicGates: z.array(deterministicGateSchema),
   telemetry: telemetrySchema.nullable(),
+  collaboration: collaborationSchema.nullable(),
   executionPolicy: executionPolicySchema.nullable(),
 };
 
@@ -125,6 +140,13 @@ export const reviewPlanSchema = reviewPlanOutputSchema.superRefine((plan, contex
       code: "custom",
       path: ["executionPolicy"],
       message: "Substantive plans require evidence, gates, and execution policy.",
+    });
+  }
+  if (!plan.collaboration) {
+    context.addIssue({
+      code: "custom",
+      path: ["collaboration"],
+      message: "Substantive plans require a shared reviewer collaboration contract.",
     });
   }
 });

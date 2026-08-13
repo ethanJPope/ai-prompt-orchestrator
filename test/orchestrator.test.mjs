@@ -10,6 +10,11 @@ import {
   selectReviewers,
 } from "../src/orchestrator.mjs";
 import { hashReviewPlan, reviewPlanSchema } from "../src/review-contract.mjs";
+import {
+  appendCollaborationMessage,
+  buildWaveHandoff,
+  createCollaborationMessage,
+} from "../src/review-collaboration.mjs";
 
 test("the registry keeps the requested profiles and adds visual specialists", () => {
   assert.equal(AGENTS.length, 22);
@@ -89,6 +94,10 @@ test("v0.3 plans expose a validated evidence, budget, and gate contract", () => 
   assert.equal(parsed.executionPolicy.latencyTargetMultiplier, 2);
   assert.equal(parsed.telemetry.location, "task-local");
   assert.ok(parsed.telemetry.recordFields.includes("waveDurations"));
+  assert.equal(parsed.collaboration.transport, "task-local-shared-packet");
+  assert.equal(parsed.collaboration.broker, "primary-agent");
+  assert.ok(parsed.collaboration.consumeRules.some((rule) => /confirm, contradict, or extend/i.test(rule)));
+  assert.equal(parsed.collaboration.waveHandoffs.length, 3);
   assert.ok(parsed.reviewers.every((reviewer) => reviewer.prompt.includes("evidence packet")));
   assert.ok(parsed.reviewers.every((reviewer) => reviewer.budget.timeoutMs >= 120_000));
 });
@@ -106,6 +115,31 @@ test("review waves preserve ten passes while parallelizing specialists", () => {
   assert.deepEqual(waves.at(-1).reviewerIds, ["final-senior-review"]);
   assert.equal(waves.at(-1).maxParallelism, 1);
   assert.ok(waves.filter((wave) => wave.mode !== "gate").every((wave) => wave.timeoutMs >= 120_000));
+});
+
+test("reviewer messages are shared, bounded, and handed off between waves", () => {
+  const first = createCollaborationMessage({
+    reviewerId: "repository-discovery",
+    wave: "discovery",
+    claim: "The dashboard server is the local execution boundary.",
+    evidenceRefs: ["dashboard/server.mjs"],
+    nextReviewerAction: "Confirm the boundary and inspect event-stream consumers.",
+  });
+  const second = createCollaborationMessage({
+    reviewerId: "architecture-boundaries",
+    wave: "specialist-waves",
+    kind: "confirms",
+    claim: "The event stream remains behind the dashboard server.",
+    evidenceRefs: ["dashboard/server.mjs", "dashboard/run-controller.mjs"],
+    relatedMessageIds: [first.messageId],
+    nextReviewerAction: "Check that no reviewer receives write access.",
+  });
+  const messages = appendCollaborationMessage(appendCollaborationMessage([], first), second);
+  const handoff = buildWaveHandoff(messages, "discovery", "specialist-waves");
+  assert.equal(messages.length, 2);
+  assert.deepEqual(handoff.messageIds, [first.messageId, second.messageId]);
+  assert.match(handoff.instruction, /Consume 2 shared finding message/);
+  assert.throws(() => appendCollaborationMessage(messages, first), /Duplicate collaboration message/);
 });
 
 test("a clean first pass exits without adding repair or repeat-review cycles", () => {
